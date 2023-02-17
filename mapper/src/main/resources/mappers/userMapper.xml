@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--mapper文件相当于DAO接口的实现类，namespace属性的值就相当于StudentDAO的全限定名（包名加类名）-->
 <mapper namespace="com.zhangxu.agmall.dao.UserDao">
-    <resultMap id="User" type="com.zhangxu.agmall.service.entity.User">
+    <resultMap id="User" type="com.zhangxu.agmall.entity.User">
         <id column="user_id" property="userId"></id>
         <result column="username" property="userId"></result>
         <result column="password" property="password"></result>
@@ -18,7 +18,11 @@
         <result column="user_regtime" property="userRegtime"></result>
         <result column="user_modtime" property="userModtime"></result>
     </resultMap>
-    <select id="selectUser" resultMap="User">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into users(username, password, user_regtime, user_modtime)
+        value(#{username},#{password},#{userRegtime},#{userModtime})
+    </insert>
+    <select id="queryUserByName" resultMap="User">
         select user_id,
                user_img,
                user_id,
@@ -33,6 +37,7 @@
                user_birth,
                user_regtime,
                user_modtime
-        from users where user_id=#{userId};
+        from users
+        where username = #{username}
     </select>
 </mapper>

@@ -1,4 +1,4 @@
-package com.zhangxu.agmall.service.entity;
+package com.zhangxu.agmall.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    private String userId;
+    private int userId;
     private String username;
     private String password;
     private String nickname;

@@ -37,6 +37,11 @@
             <artifactId>beans</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.zhangxu</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
