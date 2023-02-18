@@ -19,8 +19,8 @@
         <result column="user_modtime" property="userModtime"></result>
     </resultMap>
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId">
-        insert into users(username, password, user_regtime, user_modtime)
-        value(#{username},#{password},#{userRegtime},#{userModtime})
+        insert into users(username, password,user_img , user_regtime,user_modtime)
+        value(#{username},#{password},#{userImg},#{userRegtime},#{userModtime})
     </insert>
     <select id="queryUserByName" resultMap="User">
         select user_id,

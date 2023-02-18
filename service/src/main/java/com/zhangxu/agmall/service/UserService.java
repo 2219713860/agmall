@@ -9,5 +9,5 @@ import com.zhangxu.agmall.vo.ResultVO;
  */
 public interface UserService {
     ResultVO loginUser(String username,String password);
-    ResultVO registUser(User user);
+    ResultVO registUser(String username,String password);
 }
