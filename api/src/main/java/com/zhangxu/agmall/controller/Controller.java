@@ -23,7 +23,7 @@ class UserController {
     public ResultVO getUser(@PathVariable("username")String username,
                             @PathVariable("password") String password
                             ) {
-        ResultVO resultVO = userService.selectUser(username,password);
+        ResultVO resultVO = userService.loginUser(username,password);
         return resultVO;
     }
 }

@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--mapper文件相当于DAO接口的实现类，namespace属性的值就相当于StudentDAO的全限定名（包名加类名）-->
 <mapper namespace="com.zhangxu.agmall.dao.UserDao">
-    <resultMap id="User" type="com.zhangxu.agmall.service.entity.User">
+    <resultMap id="User" type="com.zhangxu.agmall.entity.User">
         <id column="user_id" property="userId"></id>
-        <result column="username" property="userId"></result>
+        <result column="username" property="username"></result>
         <result column="password" property="password"></result>
         <result column="nickname" property="nickname"></result>
         <result column="realname" property="realname"></result>

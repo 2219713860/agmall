@@ -6,7 +6,7 @@
 <mapper namespace="com.zhangxu.agmall.dao.UserDao">
     <resultMap id="User" type="com.zhangxu.agmall.entity.User">
         <id column="user_id" property="userId"></id>
-        <result column="username" property="userId"></result>
+        <result column="username" property="username"></result>
         <result column="password" property="password"></result>
         <result column="nickname" property="nickname"></result>
         <result column="realname" property="realname"></result>

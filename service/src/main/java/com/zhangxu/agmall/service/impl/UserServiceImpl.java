@@ -17,12 +17,32 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
-    public ResultVO selectUser(String username, String password) {
-        User user = userDao.queryUserByName(username);
+    public ResultVO loginUser(String username, String password) {
         //todo 没有情况判断
-        ResultVO resultVO = new ResultVO(200, "成功", user);
-        return resultVO;
+        if (username==null){//确认用户名和密码都输入了
+            return new ResultVO(200,"请输入用户名",null);
+        }
+        if(password==null){
+            return new ResultVO(200,"请输入密码",null);
+        }
+        User user = userDao.queryUserByName(username);
+        //确认用户查到了
+        if (user==null) {
+            return new ResultVO(200, "用户不存在", null);
+        }
+//        对比密码
+        if (password.equals(user.getPassword())) {
+           return new ResultVO(200, "成功", user);
+        }
+//        密码错误返回密码错误信息
+        return new ResultVO(200, "密码错误", null);
     }
 
     @Override

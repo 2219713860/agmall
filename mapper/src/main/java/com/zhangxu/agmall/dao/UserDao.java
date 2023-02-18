@@ -15,7 +15,7 @@ public interface UserDao {
     int insertUser(User user);
 
     /**
-     * 根据用户名查询用户信息
+     * 根据用户名查询用户信息,可以将查询出来的信息作为用户登陆的校验
      * @param userId
      * @return
      */

@@ -8,6 +8,6 @@ import com.zhangxu.agmall.vo.ResultVO;
  * @create 2023-02-17
  */
 public interface UserService {
-    ResultVO selectUser(String username,String password);
+    ResultVO loginUser(String username,String password);
     ResultVO registUser(User user);
 }
