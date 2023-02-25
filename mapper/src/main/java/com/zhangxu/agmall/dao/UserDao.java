@@ -6,7 +6,7 @@ import com.zhangxu.agmall.entity.User;
  * @author zhangxu
  * @create 2023-02-17
  */
-public interface UserDao {
+public interface UserDao{
     /**
      * 用户注册
      * @param user
