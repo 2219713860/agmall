@@ -1,6 +1,5 @@
 package com.zhangxu.agmall.service;
 
-import com.zhangxu.agmall.entity.User;
 import com.zhangxu.agmall.vo.ResultVO;
 
 /**

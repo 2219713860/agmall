@@ -1,6 +1,5 @@
 package com.zhangxu.agmall.controller;
 
-import com.zhangxu.agmall.entity.User;
 import com.zhangxu.agmall.service.UserService;
 import com.zhangxu.agmall.vo.ResultVO;
 import org.springframework.web.bind.annotation.*;

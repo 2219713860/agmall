@@ -33,6 +33,17 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>com.zhangxu</groupId>
             <artifactId>beans</artifactId>
             <version>1.0.0</version>
@@ -47,10 +58,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -63,15 +70,15 @@
                 </configuration>
           <dependencies>
                   <dependency>
-                      <groupId>tk.mybatis</groupId>
+                      <groupId >tk.mybatis</groupId>
                       <artifactId>mapper</artifactId>
                       <version>4.1.5</version>
                   </dependency>
-              <dependency>
-                  <groupId>mysql</groupId>
-                  <artifactId>mysql-connector-java</artifactId>
-                  <version>5.1.47</version>
-              </dependency>
+                  <dependency>
+                      <groupId>mysql</groupId>
+                      <artifactId>mysql-connector-java</artifactId>
+                      <version>5.1.47</version>
+                  </dependency>
           </dependencies>
             </plugin>
         </plugins>
