@@ -78,7 +78,8 @@ public class UserServiceImpl implements UserService {
         criteria.andEqualTo("username", username);
         List<Users> users = usersMapper.selectByExample(example);
         //确认用户查到了
-        if (users.size()==0) {
+        if (users.size() == 0) {
+            System.out.println(username + ":" + password);
             return new ResultVO(200, "用户不存在", null);
         }
 //        对比密码
@@ -87,6 +88,7 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword() != null) {
             password = MD5Utils.md5(password);
             if (password.equals(user.getPassword())) {
+                System.out.println(user);
                 return new ResultVO(200, "成功", user);
             }
         } else {

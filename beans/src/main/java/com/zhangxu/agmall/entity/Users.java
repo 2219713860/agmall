@@ -1,8 +1,11 @@
 package com.zhangxu.agmall.entity;
 
+import lombok.ToString;
+
 import java.util.Date;
 import javax.persistence.*;
 
+@ToString
 public class Users {
     @Id
     @Column(name = "user_id")
