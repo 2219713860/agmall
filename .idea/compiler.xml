@@ -14,14 +14,6 @@
         <module name="beans" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="agmall" target="8" />
-      <module name="api" target="8" />
-      <module name="beans" target="8" />
-      <module name="common" target="8" />
-      <module name="mapper" target="8" />
-      <module name="service" target="8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
