@@ -3,17 +3,24 @@ package com.zhangxu.agmall.service.impl;
 import com.zhangxu.agmall.dao.UsersMapper;
 import com.zhangxu.agmall.entity.Users;
 import com.zhangxu.agmall.service.UserService;
+import com.zhangxu.agmall.utils.Base64Utils;
 import com.zhangxu.agmall.utils.MD5Utils;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.awt.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangxu
@@ -40,7 +47,7 @@ public class UserServiceImpl implements UserService {
                 password = MD5Utils.md5(password);
                 user.setUsername(username);
                 user.setPassword(password);
-                user.setUserImg("img/defualt.img");
+                user.setUserImg("imgs/default.png");
                 user.setUserRegtime(new Date());
                 user.setUserModtime(new Date());
                 int userNum = usersMapper.insert(user);
@@ -82,7 +89,19 @@ public class UserServiceImpl implements UserService {
             password = MD5Utils.md5(password);
             if (password.equals(user.getPassword())) {
                 System.out.println(user);
-                return new ResultVO(ResStatus.OK, "成功", user);
+                JwtBuilder builder = Jwts.builder();
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("key1",new Date(System.currentTimeMillis()));
+                map.put("key2",new Date(System.currentTimeMillis()+24*60*60));
+                String token = builder
+                        .setSubject(username).//主题，一般使用username
+                        setIssuedAt(new Date()).//token生成时间
+                        setId(user.getUserId()+"").//设置用户id为token的ID
+                        setClaims(map).//一般用来存储用户的权限信息
+                        setExpiration(new Date(System.currentTimeMillis()+72*60*60*1000)).//token有效日期
+                        signWith(SignatureAlgorithm.HS256,"123456").//使用什么“加密算法”以及加密的“密码”
+                        compact();
+                return new ResultVO(ResStatus.OK, token, user);
             }
         } else {
             return new ResultVO(ResStatus.NO, "存储密码查询出错，请等待几分钟后重试", null);

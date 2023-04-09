@@ -33,6 +33,19 @@
     </dependencies>
         <dependencyManagement>
             <dependencies>
+<!--                加密token-->
+                <dependency>
+                    <groupId>com.auth0</groupId>
+                    <artifactId>java-jwt</artifactId>
+                    <version>3.10.3</version>
+                </dependency>
+        <!-- 加密算法 https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+                <dependency>
+                    <groupId>io.jsonwebtoken</groupId>
+                    <artifactId>jjwt</artifactId>
+                    <version>0.9.1</version>
+                </dependency>
+
                 <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
                 <dependency>
                     <groupId>com.alibaba</groupId>
