@@ -1,0 +1,14 @@
+com\zhangxu\agmall\dao\OrdersMapper.class
+com\zhangxu\agmall\dao\CategoryMapper.class
+com\zhangxu\agmall\dao\UserAddrMapper.class
+com\zhangxu\agmall\dao\ProductMapper.class
+com\zhangxu\agmall\dao\ShoppingCartMapper.class
+com\zhangxu\agmall\dao\ProductSkuMapper.class
+com\zhangxu\agmall\general\GeneralDAO.class
+com\zhangxu\agmall\dao\IndexImgMapper.class
+com\zhangxu\agmall\dao\ProductParamsMapper.class
+com\zhangxu\agmall\dao\ProductCommentsMapper.class
+com\zhangxu\agmall\dao\UserLoginHistoryMapper.class
+com\zhangxu\agmall\dao\ProductImgMapper.class
+com\zhangxu\agmall\dao\OrderItemMapper.class
+com\zhangxu\agmall\dao\UsersMapper.class

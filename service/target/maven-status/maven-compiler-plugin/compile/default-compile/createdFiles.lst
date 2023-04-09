@@ -1,0 +1,4 @@
+com\zhangxu\agmall\service\IndexImgService.class
+com\zhangxu\agmall\service\UserService.class
+com\zhangxu\agmall\service\impl\IndexImgServiceaImpl.class
+com\zhangxu\agmall\service\impl\UserServiceImpl.class
