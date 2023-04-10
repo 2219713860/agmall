@@ -2,6 +2,7 @@ com\zhangxu\agmall\entity\ProductParams.class
 com\zhangxu\agmall\entity\Category.class
 com\zhangxu\agmall\entity\ProductSku.class
 com\zhangxu\agmall\entity\Users.class
+com\zhangxu\agmall\entity\CategoryVO.class
 com\zhangxu\agmall\entity\Product.class
 com\zhangxu\agmall\entity\IndexImg.class
 com\zhangxu\agmall\entity\ProductComments.class

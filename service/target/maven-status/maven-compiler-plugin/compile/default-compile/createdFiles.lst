@@ -1,4 +1,8 @@
-com\zhangxu\agmall\service\IndexImgService.class
+com\zhangxu\agmall\service\impl\CategoryServiceImpl.class
+com\zhangxu\agmall\service\ShopCartService.class
+com\zhangxu\agmall\service\CategoryService.class
 com\zhangxu\agmall\service\UserService.class
-com\zhangxu\agmall\service\impl\IndexImgServiceaImpl.class
 com\zhangxu\agmall\service\impl\UserServiceImpl.class
+com\zhangxu\agmall\service\IndexImgService.class
+com\zhangxu\agmall\service\impl\ShopCartServiceImpl.class
+com\zhangxu\agmall\service\impl\IndexImgServiceaImpl.class
