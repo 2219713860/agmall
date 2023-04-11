@@ -1,7 +1,11 @@
 package com.zhangxu.agmall.controller;
 
+import com.zhangxu.agmall.dao.ProductImgMapper;
+import com.zhangxu.agmall.dao.ProductMapper;
+import com.zhangxu.agmall.entity.ProductImg;
 import com.zhangxu.agmall.service.CategoryService;
 import com.zhangxu.agmall.service.IndexImgService;
+import com.zhangxu.agmall.service.ProductService;
 import com.zhangxu.agmall.vo.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +28,9 @@ public class IndexController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
     @GetMapping("/indeximg")
     @ApiOperation("首页轮播图接口")
     public ResultVO listIndexImgs(){
@@ -42,6 +49,15 @@ public class IndexController {
     public ResultVO listCategory(@RequestParam("parentId") String parentId) {
         int parsedInt = Integer.parseInt(parentId);
         ResultVO resultVO = categoryService.listCategory2(parsedInt);
+        return resultVO;
+    }
+
+
+
+    @GetMapping("/list-recommend")
+    @ApiOperation("查询推荐商品接口")
+    public ResultVO test(){
+        ResultVO resultVO = productService.listRecommendProducts();
         return resultVO;
     }
 }
