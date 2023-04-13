@@ -1,7 +1,9 @@
 package com.zhangxu.agmall.controller;
 
+import com.zhangxu.agmall.dao.CategoryMapper;
 import com.zhangxu.agmall.dao.ProductImgMapper;
 import com.zhangxu.agmall.dao.ProductMapper;
+import com.zhangxu.agmall.entity.CategoryVO;
 import com.zhangxu.agmall.entity.ProductImg;
 import com.zhangxu.agmall.service.CategoryService;
 import com.zhangxu.agmall.service.IndexImgService;
@@ -11,8 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.image.RescaleOp;
 
 /**
  * @author zhangxu
@@ -55,9 +55,15 @@ public class IndexController {
 
 
     @GetMapping("/list-recommend")
-    @ApiOperation("查询推荐商品接口")
-    public ResultVO test(){
+    @ApiOperation("新品推荐商品接口")
+    public ResultVO listRecommend(){
         ResultVO resultVO = productService.listRecommendProducts();
+        return resultVO;
+    }
+    @GetMapping("/list-category-recommend")
+    @ApiOperation("查询分类后推荐商品接口")
+    public ResultVO test(){
+        ResultVO resultVO = categoryService.listFirstLevelCategories();
         return resultVO;
     }
 }

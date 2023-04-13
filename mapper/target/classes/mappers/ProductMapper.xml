@@ -26,19 +26,37 @@
   </resultMap>
     <select id="selectRecommendProducts" resultMap="ProductVOMap">
       SELECT
-        product.product_id,
-        product.product_name,
-        product.category_id,
-        product.root_category_id,
-        product.sold_num,
-        product.product_status,
-        product.content,
-        product.create_time,
-        product.update_time
+        product_id,
+        product_name,
+        category_id,
+        root_category_id,
+        sold_num,
+        product_status,
+        content,
+        create_time,
+        update_time
       FROM
         product
       ORDER BY
-        product.create_time DESC
+        create_time DESC
       LIMIT 0, 3;
     </select>
+  <select id="selectTop6ByCategory" resultMap="ProductVOMap">
+    SELECT
+      product_id,
+      product_name,
+      category_id,
+      root_category_id,
+      sold_num,
+      product_status,
+      content,
+      create_time,
+      update_time
+    FROM
+      product
+    where root_category_id = #{categoryId}
+    ORDER BY
+      sold_num DESC
+    LIMIT 0, 6;
+  </select>
 </mapper>

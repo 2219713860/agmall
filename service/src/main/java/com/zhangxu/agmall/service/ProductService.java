@@ -10,4 +10,8 @@ import com.zhangxu.agmall.vo.ResultVO;
 public interface ProductService {
 
     public ResultVO listRecommendProducts();
+
+    public ResultVO getProductBaseInfo(String productId);
+
+    public ResultVO getProductParamsById(String productId);
 }

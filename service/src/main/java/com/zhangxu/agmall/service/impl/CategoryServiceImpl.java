@@ -20,6 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    /**
+     * 查询三个级别的分类
+     * @return
+     */
     @Override
     public ResultVO listCategory() {
         ArrayList<CategoryVO> categoryVOS = categoryMapper.selectAllCategories();
@@ -29,10 +34,23 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return resultVO;
     }
-    public ResultVO listCategory2(Integer parentId){
+    /**
+     * 查询三个级别的分类
+     * @return
+     */
+    public ResultVO listCategory2(Integer parentId) {
 
         ArrayList<CategoryVO> categoryVOS = categoryMapper.selectAllCategories2(parentId);
-        return new ResultVO(ResStatus.OK,"success",categoryVOS);
+        return new ResultVO(ResStatus.OK, "success", categoryVOS);
+    }
+    /**
+     * 查询所有一级分类,同时查询当前一级分类下销量最高的6个商品
+     * @return
+     */
+    @Override
+    public ResultVO listFirstLevelCategories() {
+        List<CategoryVO> categoryVOS = categoryMapper.selectFirstLevelCategories();
+        return new ResultVO(ResStatus.OK, "success", categoryVOS);
     }
 
 }

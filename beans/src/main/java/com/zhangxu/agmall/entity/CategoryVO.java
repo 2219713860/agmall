@@ -26,6 +26,6 @@ public class CategoryVO {
     //实现首页的类别显示
     private List<CategoryVO> categories;
     //实现首页分类商品推荐
-//    private List<ProductVO> products;
+    private List<ProductVO> products;
 
 }

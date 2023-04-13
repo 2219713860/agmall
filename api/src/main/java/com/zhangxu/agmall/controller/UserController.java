@@ -12,12 +12,12 @@ import javax.annotation.Resource;
  * @create 2023-02-17
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
     @Resource
     private UserService userService;
 
-    @CrossOrigin
     @GetMapping("/{username}/{password}")
     public ResultVO getUser(@PathVariable("username") String username,
                             @PathVariable("password") String password
@@ -25,7 +25,6 @@ public class UserController {
         ResultVO resultVO = userService.loginUser(username, password);
         return resultVO;
     }
-    @CrossOrigin
     @PostMapping("/{username}/{password}")
     public ResultVO registUser(
             @PathVariable("username") String username,
