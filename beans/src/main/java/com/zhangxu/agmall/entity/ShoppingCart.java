@@ -49,6 +49,12 @@ public class ShoppingCart {
     private BigDecimal productPrice;
 
     /**
+     * 选择套餐的属性
+     */
+    @Column(name = "sku_props")
+    private String skuProps;
+
+    /**
      * 获取主键
      *
      * @return cart_id - 主键
@@ -172,5 +178,23 @@ public class ShoppingCart {
      */
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
+    }
+
+    /**
+     * 获取选择套餐的属性
+     *
+     * @return sku_props - 选择套餐的属性
+     */
+    public String getSkuProps() {
+        return skuProps;
+    }
+
+    /**
+     * 设置选择套餐的属性
+     *
+     * @param skuProps 选择套餐的属性
+     */
+    public void setSkuProps(String skuProps) {
+        this.skuProps = skuProps;
     }
 }

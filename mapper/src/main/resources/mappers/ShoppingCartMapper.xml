@@ -12,5 +12,6 @@
     <result column="cart_num" jdbcType="VARCHAR" property="cartNum" />
     <result column="cart_time" jdbcType="VARCHAR" property="cartTime" />
     <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
   </resultMap>
 </mapper>

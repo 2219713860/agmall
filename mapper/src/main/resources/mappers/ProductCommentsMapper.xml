@@ -21,4 +21,58 @@
     <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
     <result column="is_show" jdbcType="INTEGER" property="isShow" />
   </resultMap>
+
+  <resultMap id="ProductCommentsVOMap" type="com.zhangxu.agmall.entity.ProductCommentsVO">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="comm_id" jdbcType="VARCHAR" property="commId" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="order_item_id" jdbcType="VARCHAR" property="orderItemId" />
+    <result column="is_anonymous" jdbcType="INTEGER" property="isAnonymous" />
+    <result column="comm_type" jdbcType="INTEGER" property="commType" />
+    <result column="comm_level" jdbcType="INTEGER" property="commLevel" />
+    <result column="comm_content" jdbcType="VARCHAR" property="commContent" />
+    <result column="comm_imgs" jdbcType="VARCHAR" property="commImgs" />
+    <result column="sepc_name" jdbcType="TIMESTAMP" property="sepcName" />
+    <result column="reply_status" jdbcType="INTEGER" property="replyStatus" />
+    <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <result column="is_show" jdbcType="INTEGER" property="isShow" />
+<!--封装用户属性-->
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+    <result column="user_img" jdbcType="VARCHAR" property="userImg"/>
+
+  </resultMap>
+    <select id="selectCommontsByProductId" resultMap="ProductCommentsVOMap">
+
+      SELECT u.username,
+             u.user_img,
+             u.nickname,
+             u.user_id,
+             pc.comm_id,
+             pc.product_id,
+             pc.product_name,
+             pc.order_item_id,
+             pc.is_anonymous,
+             pc.comm_type,
+             pc.comm_level,
+             pc.comm_content,
+             pc.comm_imgs,
+             pc.sepc_name,
+             pc.reply_status,
+             pc.reply_content,
+             pc.reply_time,
+             pc.is_show
+      FROM product_comments AS pc
+             INNER JOIN
+           users AS u
+           ON
+             pc.user_id = u.user_id
+      where pc.product_id = #{productId}
+      limit #{start},#{limit};
+    </select>
 </mapper>

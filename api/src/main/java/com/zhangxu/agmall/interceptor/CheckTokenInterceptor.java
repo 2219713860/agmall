@@ -38,7 +38,7 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             try {
                 JwtParser parser = Jwts.parser();
                 parser.setSigningKey("123456");
-                Jws<Claims> claimsJws = parser.parseClaimsJws(token);
+                parser.parseClaimsJws(token);
                 return true;
             } catch (ExpiredJwtException e) {
                 ResultVO resultVO = new ResultVO(ResStatus.NO, "登录过期，请重新登陆", null);
