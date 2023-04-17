@@ -1,6 +1,5 @@
 package com.zhangxu.agmall.interceptor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
@@ -10,7 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -30,24 +28,24 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("token");
-        if (token == null) {
-            ResultVO resultVO = new ResultVO(ResStatus.NO, "请先登录！！", null);
+        if (token.equalsIgnoreCase("null")) {
+            ResultVO resultVO = new ResultVO(ResStatus.NOT_LOGIN, "Token为空，请先登录！！", null);
             this.doResponse(resultVO, response);
         } else {
-
+//            如果没有异常，拦截器就不执行doresponse相应，并且放行请求；
             try {
                 JwtParser parser = Jwts.parser();
                 parser.setSigningKey("123456");
                 parser.parseClaimsJws(token);
                 return true;
             } catch (ExpiredJwtException e) {
-                ResultVO resultVO = new ResultVO(ResStatus.NO, "登录过期，请重新登陆", null);
+                ResultVO resultVO = new ResultVO(ResStatus.LOGIN_FAIL, "登录过期，请重新登陆", null);
                 this.doResponse(resultVO, response);
             } catch (UnsupportedJwtException e) {
-                ResultVO resultVO = new ResultVO(ResStatus.NO, "token不合法请自重", null);
+                ResultVO resultVO = new ResultVO(ResStatus.TOKEN_ILLEGALITY, "token不合法请自重", null);
                 doResponse(resultVO, response);
             } catch (Exception e) {
-                ResultVO resultVO = new ResultVO(ResStatus.NO, "token不合法请自重", null);
+                ResultVO resultVO = new ResultVO(ResStatus.NOT_LOGIN, "请先登录", null);
                 doResponse(resultVO, response);
             }
         }
