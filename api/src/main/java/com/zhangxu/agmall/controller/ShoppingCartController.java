@@ -5,7 +5,6 @@ import com.zhangxu.agmall.service.ShoppingCartService;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +16,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/shopcart")
 @CrossOrigin
 @Api(value = "提供购物车业务相关接口", tags = "购物车管理")
-public class ShopCartController {
+public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/add")
-    public ResultVO listCarts(@RequestBody ShoppingCart shoppingCart
+    public ResultVO addCart(@RequestBody ShoppingCart shoppingCart
             , @RequestHeader("token") String token) {
         ResultVO resultVO = shoppingCartService.addShoppingCart(shoppingCart);
         return resultVO;
+    }
+
+    @GetMapping("/list")
+    public ResultVO listCarts(Integer userId, @RequestHeader("token") String token) {
+        if (userId != null) {
+            return shoppingCartService.listShoppingCartsByUserId(userId);
+        }
+        return new ResultVO(ResStatus.NO, "fail", null);
+    }
+
+    @PutMapping("/update/{cid}/{cnum}")
+    public ResultVO updateNum(
+            @PathVariable("cid") Integer cid,
+            @PathVariable("cnum") Integer cnum,
+            @RequestHeader("token") String token
+    ) {
+        if (cid != null) {
+            return shoppingCartService.updateCartNum(cid, cnum);
+        }
+        return new ResultVO(ResStatus.NO, "fail", null);
     }
 }

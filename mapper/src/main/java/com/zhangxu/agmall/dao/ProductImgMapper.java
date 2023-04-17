@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface ProductImgMapper extends GeneralDAO<ProductImg> {
     public List<ProductImg> selectProductImgByProductId(int productId);
-
 }

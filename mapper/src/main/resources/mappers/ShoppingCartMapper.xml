@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhangxu.agmall.dao.ShoppingCartMapper">
   <resultMap id="BaseResultMap" type="com.zhangxu.agmall.entity.ShoppingCart">
-    <!--
-      WARNING - @mbg.generated
-    -->
+    <!--WARNING - @mbg.generated-->
     <id column="cart_id" jdbcType="INTEGER" property="cartId" />
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
     <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
@@ -14,4 +12,43 @@
     <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
     <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
   </resultMap>
+  <resultMap id="ShoppingCartVOMap" type="com.zhangxu.agmall.entity.ShoppingCartVO">
+    <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="cart_num" jdbcType="VARCHAR" property="cartNum" />
+    <result column="cart_time" jdbcType="VARCHAR" property="cartTime" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
+    <result column="product_name" property="productName"></result>
+    <result column="url" property="productImg"></result>
+    <result column="original_price" property="originalPrice"></result>
+    <result column="sell_price" property="sellPrice"></result>
+  </resultMap>
+    <update id="updateCartNumByCartId">
+        update shopping_cart
+        set cart_num = #{cartNum}
+        where cart_id = #{cartId};
+    </update>
+    <select id="selectShoppingCartByUserId" resultMap="ShoppingCartVOMap">
+      SELECT sc.cart_id,
+             sc.product_id,
+             sc.sku_id,
+             sc.sku_props,
+             sc.user_id,
+             sc.cart_num,
+             sc.cart_time,
+             sc.product_price,
+             p.product_name,
+             pi.url,
+             ps.original_price,
+             ps.sell_price
+      FROM product AS p
+             INNER JOIN shopping_cart AS sc ON p.product_id = sc.product_id
+             INNER JOIN product_img AS pi ON pi.item_id = p.product_id
+             INNER JOIN product_sku ps ON sc.sku_id = ps.sku_id
+      WHERE sc.user_id = #{userId}
+        AND pi.is_main = 1;
+    </select>
 </mapper>
