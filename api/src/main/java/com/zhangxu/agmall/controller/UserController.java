@@ -20,8 +20,7 @@ public class UserController {
 
     @GetMapping("/{username}/{password}")
     public ResultVO getUser(@PathVariable("username") String username,
-                            @PathVariable("password") String password
-    ) {
+                            @PathVariable("password") String password) {
         ResultVO resultVO = userService.loginUser(username, password);
         return resultVO;
     }

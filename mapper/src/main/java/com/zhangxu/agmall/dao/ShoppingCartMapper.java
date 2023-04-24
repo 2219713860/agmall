@@ -13,5 +13,6 @@ public interface ShoppingCartMapper extends GeneralDAO<ShoppingCart>{
         public List<ShoppingCartVO> selectShoppingCartByUserId(@Param("userId") int userId);
         public int updateCartNumByCartId(@Param("cartId") int cartId,
                                          @Param( "cartNum" ) int cartNum);
+        public List<ShoppingCartVO> selectShoppingCartByCids(List<Integer> cids);
 
 }

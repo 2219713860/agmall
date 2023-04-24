@@ -8,6 +8,8 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author zhangxu
  * @create 2023-04-08
@@ -43,6 +45,13 @@ public class ShoppingCartController {
     ) {
         if (cid != null) {
             return shoppingCartService.updateCartNum(cid, cnum);
+        }
+        return new ResultVO(ResStatus.NO, "fail", null);
+    }
+    @GetMapping("/choosed-list-bycids")
+    public ResultVO listCids(String cids, @RequestHeader("token") String token) {
+        if (cids != null) {
+            return shoppingCartService.listShoppingCartCids(cids);
         }
         return new ResultVO(ResStatus.NO, "fail", null);
     }

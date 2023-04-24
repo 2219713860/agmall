@@ -1,10 +1,17 @@
 package com.zhangxu.agmall.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "order_item")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderItem {
     /**
      * 订单项ID
