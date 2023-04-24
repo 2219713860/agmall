@@ -1,31 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhangxu.agmall.dao.OrdersMapper">
-  <resultMap id="BaseResultMap" type="com.zhangxu.agmall.entity.Orders">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="untitled" jdbcType="VARCHAR" property="untitled" />
-    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
-    <result column="receiver_mobile" jdbcType="VARCHAR" property="receiverMobile" />
-    <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
-    <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
-    <result column="actual_amount" jdbcType="INTEGER" property="actualAmount" />
-    <result column="pay_type" jdbcType="INTEGER" property="payType" />
-    <result column="order_remark" jdbcType="VARCHAR" property="orderRemark" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType" />
-    <result column="delivery_flow_id" jdbcType="VARCHAR" property="deliveryFlowId" />
-    <result column="order_freight" jdbcType="DECIMAL" property="orderFreight" />
-    <result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
-    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
-    <result column="flish_time" jdbcType="TIMESTAMP" property="flishTime" />
-    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
-    <result column="close_type" jdbcType="INTEGER" property="closeType" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.zhangxu.agmall.entity.Orders">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="untitled" jdbcType="VARCHAR" property="untitled"/>
+        <result column="receiver_name" jdbcType="VARCHAR" property="receiverName"/>
+        <result column="receiver_mobile" jdbcType="VARCHAR" property="receiverMobile"/>
+        <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress"/>
+        <result column="total_amount" jdbcType="DECIMAL" property="totalAmount"/>
+        <result column="actual_amount" jdbcType="INTEGER" property="actualAmount"/>
+        <result column="pay_type" jdbcType="INTEGER" property="payType"/>
+        <result column="order_remark" jdbcType="VARCHAR" property="orderRemark"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType"/>
+        <result column="delivery_flow_id" jdbcType="VARCHAR" property="deliveryFlowId"/>
+        <result column="order_freight" jdbcType="DECIMAL" property="orderFreight"/>
+        <result column="delete_status" jdbcType="INTEGER" property="deleteStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime"/>
+        <result column="flish_time" jdbcType="TIMESTAMP" property="flishTime"/>
+        <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime"/>
+        <result column="close_type" jdbcType="INTEGER" property="closeType"/>
+    </resultMap>
+    <resultMap id="OrdersVOMap" type="com.zhangxu.agmall.entity.OrdersVO">
+        <id column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="untitled" jdbcType="VARCHAR" property="untitled"/>
+        <result column="receiver_name" jdbcType="VARCHAR" property="receiverName"/>
+        <result column="receiver_mobile" jdbcType="VARCHAR" property="receiverMobile"/>
+        <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress"/>
+        <result column="total_amount" jdbcType="DECIMAL" property="totalAmount"/>
+        <result column="actual_amount" jdbcType="INTEGER" property="actualAmount"/>
+        <result column="pay_type" jdbcType="INTEGER" property="payType"/>
+        <result column="order_remark" jdbcType="VARCHAR" property="orderRemark"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType"/>
+        <result column="delivery_flow_id" jdbcType="VARCHAR" property="deliveryFlowId"/>
+        <result column="order_freight" jdbcType="DECIMAL" property="orderFreight"/>
+        <result column="delete_status" jdbcType="INTEGER" property="deleteStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime"/>
+        <result column="flish_time" jdbcType="TIMESTAMP" property="flishTime"/>
+        <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime"/>
+        <result column="close_type" jdbcType="INTEGER" property="closeType"/>
+        <collection property="orderItems"
+                    ofType="com.zhangxu.agmall.entity.OrderItem"
+                    column="order_id"
+                    select="com.zhangxu.agmall.dao.OrderItemMapper.listOrderItemsByOrderId"></collection>
+    </resultMap>
+    <select id="selectOrders" resultMap="OrdersVOMap">
+        SELECT
+        orders.order_id,
+        orders.user_id,
+        orders.untitled,
+        orders.receiver_name,
+        orders.receiver_mobile,
+        orders.receiver_address,
+        orders.close_type,
+        orders.cancel_time,
+        orders.flish_time,
+        orders.delivery_time,
+        orders.pay_time,
+        orders.update_time,
+        orders.create_time,
+        orders.delete_status,
+        orders.order_freight,
+        orders.delivery_flow_id,
+        orders.delivery_type,
+        orders.`status`,
+        orders.order_remark,
+        orders.pay_type,
+        orders.actual_amount,
+        orders.total_amount
+        FROM
+        orders
+        WHERE
+        user_id =#{userId}
+        <if test="status!=null and status!=''">
+            AND STATUS = #{status}
+        </if>
+        ORDER BY
+        create_time DESC
+        LIMIT #{start},#{limit};
+    </select>
 </mapper>

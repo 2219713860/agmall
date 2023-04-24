@@ -23,9 +23,6 @@
   </resultMap>
 
   <resultMap id="ProductCommentsVOMap" type="com.zhangxu.agmall.entity.ProductCommentsVO">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="comm_id" jdbcType="VARCHAR" property="commId" />
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
@@ -75,4 +72,5 @@
       where pc.product_id = #{productId}
       limit #{start},#{limit};
     </select>
+
 </mapper>

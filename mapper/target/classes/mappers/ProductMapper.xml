@@ -59,4 +59,65 @@
       sold_num DESC
     LIMIT 0, 6;
   </select>
+  <resultMap id="ProductVOMap2" type="com.zhangxu.agmall.entity.ProductVO">
+    <id column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="root_category_id" jdbcType="INTEGER" property="rootCategoryId" />
+    <result column="sold_num" jdbcType="INTEGER" property="soldNum" />
+    <result column="product_status" jdbcType="INTEGER" property="productStatus" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <collection property="skus" column="product_id" ofType="com.zhangxu.agmall.entity.ProductSku"
+     select="com.zhangxu.agmall.dao.ProductSkuMapper.selectLowestPriceByProductId">
+    </collection>
+  </resultMap>
+  <select id="selectProductByCategoryId" resultMap="ProductVOMap2">
+    SELECT
+      product_id,
+      product_name,
+      category_id,
+      root_category_id,
+      sold_num,
+      product_status,
+      content,
+      create_time,
+      update_time
+    FROM
+      product
+    where category_id = #{cid}
+    LIMIT #{start},#{limit};
+  </select>
+  <select id="selectProductByKeyword" resultMap="ProductVOMap2">
+    SELECT
+      product_id,
+      product_name,
+      category_id,
+      root_category_id,
+      sold_num,
+      product_status,
+      content,
+      create_time,
+      update_time
+    FROM
+      product
+      where product_name like #{keyword}
+    LIMIT #{start},#{limit};
+  </select>
+  <select id="selectBrandByCategoryId" resultSets="java.util.List" resultType="java.lang.String">
+      select DISTINCT brand
+      from product_params
+      where product_id in (select product_id
+                           from product
+                           where category_id = #{cid})
+  </select>
+  <select id="selectBrandByKeyword" resultSets="java.util.List" resultType="java.lang.String">
+      select DISTINCT brand
+      from product_params
+      where product_id in (select product_id
+                           from product
+                           where product_name like #{keyword})
+
+  </select>
 </mapper>

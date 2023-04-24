@@ -29,5 +29,6 @@ public class ShoppingCartVO {
 //    套餐表中的数据
     private String sellPrice;
     private String originalPrice;
-
+    private String skuName;
+    private int skuStock;//商品库存
 }

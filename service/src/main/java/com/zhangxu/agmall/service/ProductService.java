@@ -14,4 +14,14 @@ public interface ProductService {
     public ResultVO getProductBaseInfo(String productId);
 
     public ResultVO getProductParamsById(String productId);
+
+    public ResultVO getProductsByCategoryId(int categoryId,int pageNum,int limit);
+
+    public ResultVO listBrands(int cid);
+
+    public ResultVO searchProduct(String keyword,int start,int limit);
+
+    public ResultVO listBrands(String keyword);
+
+
 }

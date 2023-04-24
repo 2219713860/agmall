@@ -48,7 +48,9 @@ with value 'CategoryVO(categoryId=43, categoryName=铜锣烧, categoryLevel=3, p
         <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan" />
         <result column="category_pic" jdbcType="VARCHAR" property="categoryPic" />
         <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor" />
-        <collection property="categories" column="category_id" ofType="com.zhangxu.agmall.entity.CategoryVO" select="selectAllCategories2">
+        <collection property="categories" column="category_id"
+                    ofType="com.zhangxu.agmall.entity.CategoryVO"
+                    select="selectAllCategories2">
         </collection>
   </resultMap>
 <!--    A集<A>,能递归

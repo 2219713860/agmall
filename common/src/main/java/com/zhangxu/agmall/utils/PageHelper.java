@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageHelper<T> {
-    private int count;
-    private int pageCount;
-    private List<T> list;
+    private int count;//总记录数
+    private int pageCount;//总页数
+    private List<T> list;//数据集合
 }

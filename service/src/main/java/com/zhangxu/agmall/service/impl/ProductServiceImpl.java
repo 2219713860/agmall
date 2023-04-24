@@ -6,6 +6,7 @@ import com.zhangxu.agmall.dao.ProductParamsMapper;
 import com.zhangxu.agmall.dao.ProductSkuMapper;
 import com.zhangxu.agmall.entity.*;
 import com.zhangxu.agmall.service.ProductService;
+import com.zhangxu.agmall.utils.PageHelper;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +88,56 @@ public class ProductServiceImpl implements ProductService {
             resultVO = new ResultVO(ResStatus.NO, "商品为三五产品", null);
         }
         return resultVO;
+    }
+
+    @Override
+    public ResultVO getProductsByCategoryId(int categoryId, int pageNum, int limit) {
+        int start = (pageNum - 1) * limit;
+        List<ProductVO> productVOS = productMapper.selectProductByCategoryId(categoryId, start, limit);
+        //2.查询当前类别下的商品的总记永数
+        Example example = new Example(Product.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("categoryId", categoryId);
+        int count = productMapper.selectCountByExample(example);//3.计算总页数
+        int pageCount = count/limit==0? count/limit:count/limit+1;
+        PageHelper<ProductVO> pageHelper = new PageHelper<>(count, pageCount, productVOS);
+        return new ResultVO(ResStatus.OK, "SUCCESS", pageHelper);
+    }
+
+    @Override
+    public ResultVO listBrands(int cid) {
+        List<String> brands = productMapper.selectBrandByCategoryId(cid);
+        return new ResultVO(ResStatus.OK, "SUCCESS", brands);
+    }
+
+    /**
+     *
+     * @param keyword搜索关键字
+     * @param pageNum当前页码
+     * @param limit每页的条数
+     * @return
+     */
+    @Override
+    public ResultVO searchProduct(String keyword,int pageNum,int limit) {
+//
+        int start = (pageNum-1)*limit;
+        //查询数据
+        keyword = "%"+keyword+"%";
+        List<ProductVO> productVOS = productMapper.selectProductByKeyword(keyword, start, limit);
+//        查询记录数据
+        Example example = new Example(Product.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andLike("productName", keyword);
+        int count = productMapper.selectCountByExample(example);
+        int pageCount = count%limit == 0? count/limit:count/limit+1;
+        PageHelper<ProductVO> pageHelper = new PageHelper<>(count, pageCount, productVOS);
+        return new ResultVO(ResStatus.OK, "SUCCESS",pageHelper);
+    }
+
+    @Override
+    public ResultVO listBrands(String keyword) {
+        keyword = "%"+keyword+"%";
+        List<String> brandList = productMapper.selectBrandByKeyword(keyword);
+        return new ResultVO(ResStatus.OK,"SUCCESS",brandList);
     }
 }

@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zhangxu
@@ -41,15 +40,39 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (shoppingCartVOS.size() > 0) {
             return new ResultVO(ResStatus.OK, "success", shoppingCartVOS);
         }
-        return new ResultVO(ResStatus.NO, "fail", null);
+        return new ResultVO(ResStatus.OK, "空空如也", null);
     }
 
     @Override
     public ResultVO updateCartNum(int cartId, int cartNum) {
         int updatedNumber = shoppingCartMapper.updateCartNumByCartId(cartId, cartNum);
-        if (updatedNumber>0){
-            return new ResultVO(ResStatus.OK, "success",null);
+        if (updatedNumber > 0) {
+            return new ResultVO(ResStatus.OK, "success", null);
         }
-            return new ResultVO(ResStatus.NO, "fail",null);
+        return new ResultVO(ResStatus.NO, "fail", null);
+    }
+
+    @Override
+    public ResultVO listShoppingCartCids(String cidsString) {
+        String[] splitString = cidsString.split(",");
+        ArrayList<Integer> cids = new ArrayList<>();
+        for (int i = 0; i < splitString.length; i++) {
+            cids.add(Integer.parseInt(splitString[i]));
+        }
+        List<ShoppingCartVO> shoppingCartVOS = shoppingCartMapper.selectShoppingCartByCids(cids);
+        if (shoppingCartVOS.size() > 0) {
+            return new ResultVO(ResStatus.OK, "success", shoppingCartVOS);
+        }
+        return new ResultVO(ResStatus.NO, "fail", shoppingCartVOS);
+    }
+
+    @Override
+    public ResultVO deleteShoppingCartByCid(int cartId) {
+        int i = shoppingCartMapper.deleteByPrimaryKey(cartId);
+        if (i==1){
+            return new ResultVO(ResStatus.OK, "success", i);
+        }else{
+            return new ResultVO(ResStatus.NO, "fail", 0);
+        }
     }
 }

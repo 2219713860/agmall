@@ -19,4 +19,24 @@
     <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime" />
     <result column="is_comment" jdbcType="INTEGER" property="isComment" />
   </resultMap>
+  <select id="listOrderItemsByOrderId" resultMap="BaseResultMap">
+    SELECT
+      order_item.item_id,
+      order_item.order_id,
+      order_item.product_id,
+      order_item.product_name,
+      order_item.product_img,
+      order_item.sku_id,
+      order_item.is_comment,
+      order_item.buy_time,
+      order_item.basket_date,
+      order_item.total_amount,
+      order_item.buy_counts,
+      order_item.product_price,
+      order_item.sku_name
+    FROM
+      order_item
+    WHERE order_id=#{orderId};
+
+  </select>
 </mapper>

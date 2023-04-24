@@ -13,6 +13,6 @@ public interface ProductCommentsMapper extends GeneralDAO<ProductComments> {
     public List<ProductCommentsVO> selectCommontsByProductId(@Param("productId") String productId
                                                             ,@Param("start") int start
                                                             ,@Param("limit") int limit);
-
+    public int insertProductCommentsByOrderItems();
 
 }
