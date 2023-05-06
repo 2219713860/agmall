@@ -1,14 +1,18 @@
 package com.zhangxu.agmall.service.impl;
 
+import com.github.wxpay.sdk.WXPay;
+import com.github.wxpay.sdk.WXPayUtil;
 import com.zhangxu.agmall.dao.OrderItemMapper;
 import com.zhangxu.agmall.dao.OrdersMapper;
 import com.zhangxu.agmall.dao.ProductSkuMapper;
 import com.zhangxu.agmall.dao.ShoppingCartMapper;
 import com.zhangxu.agmall.entity.*;
 import com.zhangxu.agmall.service.OrderService;
+import com.zhangxu.agmall.service.timingtask.MyPayConfig;
 import com.zhangxu.agmall.utils.PageHelper;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
+import org.apache.ibatis.transaction.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,29 +43,29 @@ public class OrderServiceImpl implements OrderService {
      * 保存订单业务
      */
     @Transactional
-    public Map<String,String> addOrder(String cids,Orders order) throws SQLException {
+    public Map<String, String> addOrder(String cids, Orders order) throws SQLException {
         logger.info("add order begin...");
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         //1.校验库存：根据cids查询当前订单中关联的购物车记录详情（包括库存）
         String[] arr = cids.split(",");
         List<Integer> cidsList = new ArrayList<>();
-        for (int i = 0; i <arr.length ; i++) {
+        for (int i = 0; i < arr.length; i++) {
             cidsList.add(Integer.parseInt(arr[i]));
         }
         List<ShoppingCartVO> list = shoppingCartMapper.selectShoppingCartByCids(cidsList);
 
         boolean f = true;
         String untitled = "";
-        for (ShoppingCartVO sc: list) {
-            if(Integer.parseInt(sc.getCartNum()) > sc.getSkuStock()){
+        for (ShoppingCartVO sc : list) {
+            if (Integer.parseInt(sc.getCartNum()) > sc.getSkuStock()) {
                 f = false;
             }
             //获取所有商品名称，以,分割拼接成字符串
-            untitled = untitled+sc.getProductName()+",";
+            untitled = untitled + sc.getProductName() + ",";
         }
 
-        if(f){
+        if (f) {
 //            System.out.println("-----库存校验完成");
             logger.info("product stock is OK...");
             //2.保存订单
@@ -78,10 +82,10 @@ public class OrderServiceImpl implements OrderService {
             int i = ordersMapper.insert(order);
 
             //3.生成商品快照
-            for (ShoppingCartVO sc: list) {
+            for (ShoppingCartVO sc : list) {
                 int cnum = Integer.parseInt(sc.getCartNum());
-                String itemId = System.currentTimeMillis()+""+ (new Random().nextInt(89999)+10000);
-                OrderItem orderItem = new OrderItem(itemId, orderId, sc.getProductId(), sc.getProductName(), sc.getProductImg(), sc.getSkuId(), sc.getSkuName(), new BigDecimal(sc.getSellPrice()), cnum, new BigDecimal(Integer.parseInt(sc.getSellPrice())* cnum), new Date(), new Date(), 0);
+                String itemId = System.currentTimeMillis() + "" + (new Random().nextInt(89999) + 10000);
+                OrderItem orderItem = new OrderItem(itemId, orderId, sc.getProductId(), sc.getProductName(), sc.getProductImg(), sc.getSkuId(), sc.getSkuName(), new BigDecimal(sc.getSellPrice()), cnum, new BigDecimal(Integer.parseInt(sc.getSellPrice()) * cnum), new Date(), new Date(), 0);
                 orderItemMapper.insert(orderItem);
                 //增加商品销量
             }
@@ -89,31 +93,31 @@ public class OrderServiceImpl implements OrderService {
             //4.扣减库存：根据套餐ID修改套餐库存量
             HashMap<String, Integer> skuIdMapMutiNum = new HashMap<>();
             Set<String> strings = skuIdMapMutiNum.keySet();
-            for (ShoppingCartVO sc: list) {
+            for (ShoppingCartVO sc : list) {
                 String skuId = sc.getSkuId();
-                skuIdMapMutiNum.put(skuId,sc.getSkuStock());
+                skuIdMapMutiNum.put(skuId, sc.getSkuStock());
             }
-            for(ShoppingCartVO sc : list){
+            for (ShoppingCartVO sc : list) {
                 String skuId = sc.getSkuId();
                 skuIdMapMutiNum.put(skuId, skuIdMapMutiNum.get(skuId) - Integer.parseInt(sc.getCartNum()));
             }
             ProductSku productSku;
-            for (String skuId:strings){
-                int newStock =skuIdMapMutiNum.get(skuId);
-                productSku=new ProductSku();
+            for (String skuId : strings) {
+                int newStock = skuIdMapMutiNum.get(skuId);
+                productSku = new ProductSku();
                 productSku.setSkuId(skuId);
                 productSku.setStock(newStock);
                 productSkuMapper.updateByPrimaryKeySelective(productSku);
             }
             //5.删除购物车：当购物车中的记录购买成功之后，购物车中对应做删除操作
-            for (int cid: cidsList) {
+            for (int cid : cidsList) {
                 shoppingCartMapper.deleteByPrimaryKey(cid);
             }
             logger.info("add order finished...");
-            map.put("orderId",orderId);
-            map.put("productNames",untitled);
+            map.put("orderId", orderId);
+            map.put("productNames", untitled);
             return map;
-        }else{
+        } else {
             //表示库存不足
             return null;
         }
@@ -129,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
 
     public ResultVO getOrderById(String orderId) {
         Orders order = ordersMapper.selectByPrimaryKey(orderId);
-        return new ResultVO(ResStatus.OK,"sucesss",order.getStatus());
+        return new ResultVO(ResStatus.OK, "sucesss", order.getStatus());
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
@@ -160,23 +164,79 @@ public class OrderServiceImpl implements OrderService {
 
     public ResultVO listOrders(String userId, String status, int pageNum, int limit) {
         //1.分页查询
-        int start = (pageNum-1)*limit;
+        int start = (pageNum - 1) * limit;
         List<OrdersVO> ordersVOS = ordersMapper.selectOrders(userId, status, start, limit);
         //2.查询总记录数
         Example example = new Example(Orders.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andLike("userId",userId);
-        if(status != null && !"".equals(status)){
-            criteria.andLike("status",status);
+        criteria.andLike("userId", userId);
+        if (status != null && !"".equals(status)) {
+            criteria.andLike("status", status);
         }
         int count = ordersMapper.selectCountByExample(example);
 
         //3.计算总页数
-        int pageCount = count%limit==0?count/limit:count/limit+1;
+        int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
 
         //4.封装数据
-        PageHelper<OrdersVO> pageHelper = new PageHelper<>(count, pageCount, ordersVOS);;
-        return new ResultVO(ResStatus.OK,"SUCCESS",pageHelper);
+        PageHelper<OrdersVO> pageHelper = new PageHelper<>(count, pageCount, ordersVOS);
+        ;
+        return new ResultVO(ResStatus.OK, "SUCCESS", pageHelper);
+    }
+
+    @Override
+    @Transactional
+    public ResultVO cancelOrdersOnNoPay(String orderId) throws Exception {
+//        根据订单编号修改订单status为6：买家取消
+        String status = "6";
+        Date updateTime = new Date();
+        Date cancelTime = new Date();
+        int closeType = 4;
+        int i = ordersMapper.beforePayupdateByOrdersId(orderId, status, updateTime, cancelTime, closeType);
+        if (i < 1) {
+            return new ResultVO(ResStatus.NO, "取消时，更新订单状态失败", null);
+        }
+//        根据订单ID查询订单快照表中的数据
+        List<OrderItem> orderItems = orderItemMapper.listOrderItemsByOrderId(orderId);
+//        查询到订单快照集合之后
+        int flat = 0;//定义flat，
+        for (OrderItem orderItem : orderItems) {
+            //修改
+            ProductSku productSku = productSkuMapper.selectByPrimaryKey(orderItem.getSkuId());
+            productSku.setStock(productSku.getStock() + orderItem.getBuyCounts());
+            int i1 = productSkuMapper.updateByPrimaryKey(productSku);
+            flat = flat + i1;
+        }
+        if (flat < orderItems.size()) {
+            return new ResultVO(ResStatus.NO, "取消订单，还原库存时，还原数量出错", null);
+        }
+//      向微信支付平台发送关闭订单请求，
+//        编辑发送数据
+        HashMap<String, String> data = new HashMap<>();
+        data.put("out_trade_no", orderId);               //使用当前用户订单的编号作为当前支付交易的交易号
+        WXPay wxPay = new WXPay(new MyPayConfig());
+        Map<String, String> responseFromWxMap = wxPay.closeOrder(data);
+        System.out.println(responseFromWxMap.toString());
+//        WXPayUtil.
+        if (responseFromWxMap != null && "success".equalsIgnoreCase(responseFromWxMap.get("result_code"))) {
+            return new ResultVO(ResStatus.OK, "success", null);
+        }
+        return new ResultVO(ResStatus.NO, "微信支付平台发送关闭请求时，关闭订单失败", null);
+    }
+    @Override
+    public ResultVO afterCancelPay(String orderId) throws Exception {
+
+//        WXPayUtil.
+        return null;
+    }
+
+    @Override
+    public ResultVO updateOrdersToDeleteStatusOne(String orderId) {
+        Orders orders = new Orders();
+        orders.setOrderId(orderId);
+        orders.setDeleteStatus(1);
+        ordersMapper.updateByPrimaryKeySelective(orders);
+        return new ResultVO(ResStatus.OK,"success",null);
     }
 
 

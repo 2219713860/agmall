@@ -18,4 +18,14 @@ public interface OrderService {
 
     public ResultVO listOrders(String userId,String status,int pageNum, int limit);
 
+    /**
+     * 在未支付下的订单取消
+     * @param orderId
+     * @return
+     */
+    public ResultVO cancelOrdersOnNoPay(String orderId) throws Exception;
+    public ResultVO afterCancelPay(String orderId) throws Exception;
+
+    public ResultVO updateOrdersToDeleteStatusOne(String orderId);
+
 }

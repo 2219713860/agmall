@@ -5,12 +5,14 @@ import com.zhangxu.agmall.entity.UserAddr;
 import com.zhangxu.agmall.service.UserAddrService;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,4 +35,41 @@ public class UserAddrServiceImpl implements UserAddrService {
         }
         return new ResultVO(ResStatus.NO,"fail",null);
     }
+
+    @Override
+    public ResultVO modifyAddrByAddrId(UserAddr userAddr) {
+        userAddr.setUpdateTime(new Date());
+        int i = userAddrMapper.updateByPrimaryKeySelective(userAddr);
+        if (i>0){
+            //
+            return new ResultVO(ResStatus.OK,"success",null);
+        }
+            return new ResultVO(ResStatus.NO,"fail",null);
+    }
+
+    @Override
+    public ResultVO deleteAddrByAddrId(String addrId) {
+        int i = userAddrMapper.deleteByPrimaryKey(addrId);
+        if (i>0){
+            //
+            return new ResultVO(ResStatus.OK,"success",null);
+        }
+        return new ResultVO(ResStatus.NO,"fail",null);
+    }
+    @Override
+    public ResultVO AddrByAddrId(UserAddr userAddr) {
+        userAddr.setCreateTime(new Date());
+        userAddr.setUpdateTime(new Date());
+        String make = RandomString.make(10);
+        userAddr.setAddrId(make);
+        userAddr.setCommonAddr(0);
+        userAddr.setStatus(1);
+        int i = userAddrMapper.insert(userAddr);
+        if (i>0){
+            //
+            return new ResultVO(ResStatus.OK,"success",null);
+        }
+        return new ResultVO(ResStatus.NO,"fail",null);
+    }
+
 }

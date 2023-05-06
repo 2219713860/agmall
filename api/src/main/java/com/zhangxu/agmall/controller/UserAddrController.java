@@ -1,5 +1,6 @@
 package com.zhangxu.agmall.controller;
 
+import com.zhangxu.agmall.entity.UserAddr;
 import com.zhangxu.agmall.service.UserAddrService;
 import com.zhangxu.agmall.vo.ResultVO;
 import com.zhangxu.agmall.service.UserAddrService;
@@ -23,6 +24,23 @@ public class UserAddrController {
         ResultVO resultVO = userAddrService.listUserAddrByUserId(userId);
         return resultVO;
     }
+    @PutMapping ("/put")
+    public ResultVO modifyAddr(@RequestBody UserAddr userAddr, @RequestHeader("token") String token){
+        ResultVO resultVO = userAddrService.modifyAddrByAddrId(userAddr);
+        return resultVO;
+    }
+    @DeleteMapping ("/delete")
+    @ApiImplicitParam(dataType = "String",name = "addrId", value = "地址表ID",required = true)
+    public ResultVO deleteAddr(String addrId, @RequestHeader("token") String token){
+        ResultVO resultVO = userAddrService.deleteAddrByAddrId(addrId);
+        return resultVO;
+    }
+    @PostMapping ("/add")
+    public ResultVO addAddr(@RequestBody UserAddr userAddr, @RequestHeader("token") String token){
+        ResultVO resultVO = userAddrService.AddrByAddrId(userAddr);
+        return resultVO;
+    }
+
 
 
 }

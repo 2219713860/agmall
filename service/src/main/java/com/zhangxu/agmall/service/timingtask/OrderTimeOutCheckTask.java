@@ -30,7 +30,7 @@ public class OrderTimeOutCheckTask {
 
     private WXPay wxPay = new WXPay(new MyPayConfig());
 
-    @Scheduled(cron = "0 15 10 L * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     @Transactional
     public void checkAndCloseOrder() {
         System.out.println("-------------------11");
@@ -67,6 +67,5 @@ public class OrderTimeOutCheckTask {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
