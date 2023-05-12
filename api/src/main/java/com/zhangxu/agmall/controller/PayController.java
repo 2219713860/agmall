@@ -44,8 +44,9 @@ public class PayController {
             int i = orderService.updateOrderStatus(orderId, "2");
             System.out.println("--orderId:"+orderId);
             //3.通过websocket连接，向前端推送消息
+            System.out.println("微信调用回调接口了，支付成功");
             WebSocketServer.sendMsg(orderId,"1");
-
+            System.out.println("通过webcocket向前端发送orderId，订单编号，和msg 1");
             //4.响应微信支付平台
             if(i>0){
                 HashMap<String,String> resp = new HashMap<>();

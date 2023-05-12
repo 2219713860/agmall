@@ -23,18 +23,12 @@ public class WebSocketServer {
     @OnOpen
     public void open(@PathParam("oid") String oid, Session session) {
         sessionMap.put(oid, session);
-        for (int i = 0; i < 100; i++) {
             System.out.println("长连接建立完成=============================");
-            System.out.println("长连接建立完成=============================");
-        }
     }
 
     @OnClose
     public void close(@PathParam("oid") String oid) {
-        for (int i = 0; i < 100; i++) {
             System.out.println("断开成功=====");
-            System.out.println("断开成功=====");
-        }
         sessionMap.remove(oid);
     }
 

@@ -1,3 +1,4 @@
+com\zhangxu\agmall\entity\ShoppingCartVO.class
 com\zhangxu\agmall\entity\ProductParams.class
 com\zhangxu\agmall\entity\Category.class
 com\zhangxu\agmall\entity\ProductSku.class
@@ -7,8 +8,11 @@ com\zhangxu\agmall\entity\Product.class
 com\zhangxu\agmall\entity\IndexImg.class
 com\zhangxu\agmall\entity\ProductComments.class
 com\zhangxu\agmall\entity\ShoppingCart.class
+com\zhangxu\agmall\entity\OrdersVO.class
 com\zhangxu\agmall\entity\UserAddr.class
 com\zhangxu\agmall\entity\Orders.class
+com\zhangxu\agmall\entity\ProductCommentsVO.class
+com\zhangxu\agmall\entity\ProductVO.class
 com\zhangxu\agmall\entity\ProductImg.class
 com\zhangxu\agmall\entity\OrderItem.class
 com\zhangxu\agmall\entity\UserLoginHistory.class

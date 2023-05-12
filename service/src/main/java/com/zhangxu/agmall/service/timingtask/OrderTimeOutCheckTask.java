@@ -33,7 +33,6 @@ public class OrderTimeOutCheckTask {
     @Scheduled(cron = "0/30 * * * * ?")
     @Transactional
     public void checkAndCloseOrder() {
-        System.out.println("-------------------11");
         try {
             //1.查询超过30min订单状态依然为待支付状态的订单
             Example example = new Example(Orders.class);

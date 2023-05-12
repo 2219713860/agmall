@@ -1,12 +1,11 @@
 package com.zhangxu.agmall.service.impl;
 
 import com.zhangxu.agmall.dao.UsersMapper;
-import com.zhangxu.agmall.entity.Users;
 import com.zhangxu.agmall.service.UserService;
-import com.zhangxu.agmall.utils.Base64Utils;
 import com.zhangxu.agmall.utils.MD5Utils;
 import com.zhangxu.agmall.vo.ResStatus;
 import com.zhangxu.agmall.vo.ResultVO;
+import com.zhangxu.agmall.entity.Users;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -48,6 +47,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserImg("imgs/default.png");
                 user.setUserRegtime(new Date());
                 user.setUserModtime(new Date());
+                user.setIsAdmin(0);
                 int userNum = usersMapper.insert(user);
                 System.out.println("========================");
                 System.out.println(user);

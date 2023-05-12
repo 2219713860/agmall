@@ -1,8 +1,11 @@
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\Category.java
+D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\OrdersVO.java
+D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\ProductVO.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\UserAddr.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\UserLoginHistory.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\CategoryVO.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\ProductSku.java
+D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\ProductCommentsVO.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\Orders.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\Product.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\ShoppingCart.java
@@ -11,4 +14,5 @@ D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\IndexImg.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\Users.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\ProductImg.java
+D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\ShoppingCartVO.java
 D:\workspace\ideaworkspace20220701\agmall\beans\src\main\java\com\zhangxu\agmall\entity\OrderItem.java

@@ -31,6 +31,7 @@ public class OrderController {
 
     @PostMapping("/add")
     public ResultVO add(String cids, @RequestBody Orders order, @RequestHeader("token") String Token) {
+        System.out.println("进入订单添加====");
         Map<String, String> stringStringMap = null;
         ResultVO resultVO = null;
         try {
@@ -45,12 +46,14 @@ public class OrderController {
                 //data.put("total_fee",order.getActualAmount()*100+"");          //支付金额
                 data.put("total_fee", "1");
                 data.put("trade_type", "NATIVE");                //交易类型
-                data.put("notify_url", "https://2bc3-120-216-250-28.jp.ngrok.io/pay/wxCallback");           //设置支付完成时的回调方法接口
+                data.put("notify_url", "www.biggou.top:8080/pay/wxCallback");           //设置支付完成时的回调方法接口
+
                 //发送请求，获取响应
                 //微信支付：申请支付连接
                 WXPay wxPay = new WXPay(new MyPayConfig());
 //                向微信发送请求，
                 Map<String, String> resp = wxPay.unifiedOrder(data);
+                System.out.println("向微信申请支付短连接成功，下面是微信支付短连接");
                 System.out.println(resp);
                 stringStringMap.put("payUrl", resp.get("code_url"));
                 //orderInfo中包含：订单编号，购买的商品名称，支付链接
@@ -63,8 +66,6 @@ public class OrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return new ResultVO(ResStatus.OK, "提交订单成功！", stringStringMap);
     }
 

@@ -56,6 +56,14 @@
                     column="order_id"
                     select="com.zhangxu.agmall.dao.OrderItemMapper.listOrderItemsByOrderId"></collection>
     </resultMap>
+    <update id="beforePayupdateByOrdersId">
+        UPDATE orders
+        SET status      = #{status},
+            update_time =#{update_time},
+            cancel_time = #{cancel_time},
+            close_type  = #{close_type}
+        WHERE order_id = #{orderid}
+    </update>
     <select id="selectOrders" resultMap="OrdersVOMap">
         SELECT
         orders.order_id,
