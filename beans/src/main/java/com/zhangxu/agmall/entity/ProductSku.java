@@ -1,9 +1,14 @@
 package com.zhangxu.agmall.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "product_sku")
 public class ProductSku {
     /**

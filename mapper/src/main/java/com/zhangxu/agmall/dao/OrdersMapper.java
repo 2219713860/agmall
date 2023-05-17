@@ -24,4 +24,5 @@ public interface OrdersMapper extends GeneralDAO<Orders> {
             @Param("update_time") Date update_time,
             @Param("cancel_time") Date cancel_time,
             @Param("close_type") Integer close_type);
+    public OrdersVO selectOrderVOByOrderId(String orderId);
 }

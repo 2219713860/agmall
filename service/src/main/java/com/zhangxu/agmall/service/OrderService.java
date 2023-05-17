@@ -27,5 +27,10 @@ public interface OrderService {
     public ResultVO afterCancelPay(String orderId) throws Exception;
 
     public ResultVO updateOrdersToDeleteStatusOne(String orderId);
+/**
+ * 按照orderId查询订单以及订单快照信息
+ */
+    public ResultVO getOrderVOByOrderId(String orderId);
+    public int deleteOrderByOrderId(String orderId);
 
 }

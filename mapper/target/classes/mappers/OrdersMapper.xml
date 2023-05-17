@@ -99,4 +99,32 @@
         create_time DESC
         LIMIT #{start},#{limit};
     </select>
+    <select id="selectOrderVOByOrderId" resultMap="OrdersVOMap">
+        SELECT
+        orders.order_id,
+        orders.user_id,
+        orders.untitled,
+        orders.receiver_name,
+        orders.receiver_mobile,
+        orders.receiver_address,
+        orders.close_type,
+        orders.cancel_time,
+        orders.flish_time,
+        orders.delivery_time,
+        orders.pay_time,
+        orders.update_time,
+        orders.create_time,
+        orders.delete_status,
+        orders.order_freight,
+        orders.delivery_flow_id,
+        orders.delivery_type,
+        orders.`status`,
+        orders.order_remark,
+        orders.pay_type,
+        orders.actual_amount,
+        orders.total_amount
+        FROM
+        orders
+        WHERE order_id=#{orderId}
+    </select>
 </mapper>

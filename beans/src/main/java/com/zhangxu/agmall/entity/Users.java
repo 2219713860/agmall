@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import javax.persistence.*;
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users {
     @Id
     @Column(name = "user_id")
@@ -78,8 +77,18 @@ public class Users {
     private Date userModtime;
 
     /**
-     * 是否是商户的管理员
+     * 是否是商户的管理员1是，0不是
      */
     @Column(name = "is_admin")
     private Integer isAdmin;
+
+    /**
+     * 账户邮箱
+     */
+    private String mail;
+
+    /**
+     * @return user_id
+     */
+
 }

@@ -223,6 +223,7 @@ public class OrderServiceImpl implements OrderService {
         }
         return new ResultVO(ResStatus.NO, "微信支付平台发送关闭请求时，关闭订单失败", null);
     }
+
     @Override
     public ResultVO afterCancelPay(String orderId) throws Exception {
 
@@ -236,8 +237,24 @@ public class OrderServiceImpl implements OrderService {
         orders.setOrderId(orderId);
         orders.setDeleteStatus(1);
         ordersMapper.updateByPrimaryKeySelective(orders);
-        return new ResultVO(ResStatus.OK,"success",null);
+        return new ResultVO(ResStatus.OK, "success", null);
     }
 
+    @Override
+    public ResultVO getOrderVOByOrderId(String orderId) {
+        OrdersVO ordersVO = ordersMapper.selectOrderVOByOrderId(orderId);
+        ArrayList<OrdersVO> ordersVOS = new ArrayList<>();
+        if (ordersVO != null) {
+            ordersVOS.add(ordersVO);
+            return new ResultVO(ResStatus.OK, "success", ordersVOS);
+        } else {
+            return new ResultVO(ResStatus.NO, "查无此单", null);
+        }
+    }
+    @Override
+    public int deleteOrderByOrderId(String orderId) {
+        int i = ordersMapper.deleteByPrimaryKey(orderId);
+        return i;
+    }
 
 }

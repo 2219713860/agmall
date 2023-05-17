@@ -4,6 +4,7 @@ package com.zhangxu.agmall.controller;
 //import com.zhangxu.agmall.service.timingtask.MyPayConfig;
 
 import com.github.wxpay.sdk.WXPay;
+import com.zhangxu.agmall.service.OrderItemService;
 import com.zhangxu.agmall.service.timingtask.MyPayConfig;
 import com.zhangxu.agmall.entity.Orders;
 import com.zhangxu.agmall.service.OrderService;
@@ -14,6 +15,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -28,6 +31,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderItemService orderItemService;
 
     @PostMapping("/add")
     public ResultVO add(String cids, @RequestBody Orders order, @RequestHeader("token") String Token) {
@@ -109,5 +114,25 @@ public class OrderController {
         String orderId = map.get("orderId");
         ResultVO resultVO = orderService.updateOrdersToDeleteStatusOne(orderId);
         return resultVO;
+    }
+    @GetMapping("/listOrderAndItems")
+    @ApiOperation("订单编号查询订单及其快照")
+    public ResultVO listOne(@RequestHeader("token") String token,
+                        String orderId) {
+        ResultVO resultVO = orderService.getOrderVOByOrderId(orderId);
+        return resultVO;
+    }
+    @DeleteMapping("/deleteOrderAllByOrderId")
+    @ApiOperation("根据订单Id删除订单的所有信息")
+    @Transactional
+    public ResultVO deleteOrderAllByOrderId(@RequestHeader("token") String token,
+                                            String orderId){
+
+        int i = orderService.deleteOrderByOrderId(orderId);
+        int j = orderItemService.deleteOrderItemByOrderId(orderId);
+        if(i+j>=1){
+        return new ResultVO(ResStatus.OK,"删除成功",i+j);
+        }
+        return new ResultVO(ResStatus.NO,"删除失败",i+j);
     }
 }

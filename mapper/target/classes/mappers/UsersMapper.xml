@@ -17,5 +17,7 @@
     <result column="user_birth" jdbcType="TIMESTAMP" property="userBirth" />
     <result column="user_regtime" jdbcType="TIMESTAMP" property="userRegtime" />
     <result column="user_modtime" jdbcType="TIMESTAMP" property="userModtime" />
+    <result column="is_admin" jdbcType="INTEGER" property="isAdmin" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
   </resultMap>
 </mapper>
